@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { FilesContainer } from "./FilesContainer";
-import { FilesContext } from "../../context/FilesContext";
+import { ProviderWrapper } from "../../tests/ProviderWrapper";
 
 const testData = [
   {
@@ -23,11 +23,16 @@ const testData = [
 describe("FilesContainer", () => {
   test("Icons display correctly", () => {
     render(
-      <FilesContext.Provider
-        value={{ filesData: testData, setFilesData: () => 1 }}
+      <ProviderWrapper
+        value={{
+          filesData: testData,
+          setFilesData: () => {
+            1;
+          },
+        }}
       >
         <FilesContainer />
-      </FilesContext.Provider>
+      </ProviderWrapper>
     );
 
     testData.forEach((item) => {
@@ -39,11 +44,16 @@ describe("FilesContainer", () => {
 
   test('Get all elements with "folder" in their text', () => {
     render(
-      <FilesContext.Provider
-        value={{ filesData: testData, setFilesData: () => 1 }}
+      <ProviderWrapper
+        value={{
+          filesData: testData,
+          setFilesData: () => {
+            1;
+          },
+        }}
       >
         <FilesContainer />
-      </FilesContext.Provider>
+      </ProviderWrapper>
     );
 
     const folderElements = screen.getAllByText(/folder/i);

@@ -8,6 +8,10 @@ const appRouting = [
     path: "/",
     element: <FilesContainer />,
   },
+  {
+    path: "/folders/*",
+    element: <FilesContainer />,
+  },
 ];
 
 export const router = createBrowserRouter([

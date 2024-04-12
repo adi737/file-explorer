@@ -7,7 +7,19 @@
   {
     "id": 2,
     "name": "folder1",
-    "type": "folder"
+    "type": "folder",
+    "children": [
+      {
+        "id": 3,
+        "name": "super-html.html",
+        "type": "text/html"
+      },
+      {
+        "id": 4,
+        "name": "super-svg.svg",
+        "type": "image/svg+xml"
+      }
+    ]
   },
   {
     "id": 3,
@@ -22,7 +34,26 @@
   {
     "id": 5,
     "name": "folder2",
-    "type": "folder"
+    "type": "folder",
+    "children": [
+      {
+        "id": 6,
+        "name": "super-pdf.pdf",
+        "type": "application/pdf"
+      },
+      {
+        "id": 7,
+        "name": "folder3",
+        "type": "folder",
+        "children": [
+          {
+            "id": 9,
+            "name": "super-jpeg.jpeg",
+            "type": "image/jpeg"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": 6,
@@ -37,7 +68,19 @@
   {
     "id": 8,
     "name": "folder4",
-    "type": "folder"
+    "type": "folder",
+    "children": [
+      {
+        "id": 6,
+        "name": "super-pdf.pdf",
+        "type": "application/pdf"
+      },
+      {
+        "id": 7,
+        "name": "folder3",
+        "type": "folder"
+      }
+    ]
   },
   {
     "id": 9,
