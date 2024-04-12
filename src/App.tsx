@@ -1,5 +1,16 @@
+import { Outlet } from "react-router-dom";
+import { Navigation } from "./components";
+import { FilesProvider } from "./context/FilesContext";
+
 function App() {
-  return <h1 className="font-bold underline">Hello world!</h1>;
+  return (
+    <FilesProvider>
+      <main>
+        <Navigation />
+        <Outlet />
+      </main>
+    </FilesProvider>
+  );
 }
 
 export default App;
