@@ -5,18 +5,38 @@ import { ProviderWrapper } from "../../tests/ProviderWrapper";
 const testData = [
   {
     id: 1,
-    name: "super-png.png",
+    name: "super-icon.png",
     type: "image/png",
   },
   {
     id: 2,
     name: "folder1",
     type: "folder",
+    children: [
+      {
+        id: 1,
+        name: "super-icon.png",
+        type: "image/png",
+      },
+      {
+        id: 3,
+        name: "folder2",
+        type: "folder",
+        children: [
+          {
+            id: 1,
+            name: "super-icon.png",
+            type: "image/png",
+          },
+        ],
+      },
+    ],
   },
   {
     id: 3,
     name: "folder2",
     type: "folder",
+    children: [],
   },
 ];
 
@@ -42,7 +62,7 @@ describe("FilesContainer", () => {
     });
   });
 
-  test('Get all elements with "folder" in their text', () => {
+  test('Proper number of items with "folder" text', () => {
     render(
       <ProviderWrapper
         value={{
@@ -59,5 +79,25 @@ describe("FilesContainer", () => {
     const folderElements = screen.getAllByText(/folder/i);
 
     expect(folderElements).toHaveLength(2);
+  });
+
+  test('Proper number of items with "folder" text on specific path', () => {
+    render(
+      <ProviderWrapper
+        value={{
+          filesData: testData,
+          setFilesData: () => {
+            1;
+          },
+        }}
+        path={["/folders/folder1"]}
+      >
+        <FilesContainer />
+      </ProviderWrapper>
+    );
+
+    const folderElements = screen.getAllByText(/folder/i);
+
+    expect(folderElements).toHaveLength(1);
   });
 });

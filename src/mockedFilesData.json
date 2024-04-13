@@ -63,7 +63,8 @@
   {
     "id": 7,
     "name": "folder3",
-    "type": "folder"
+    "type": "folder",
+    "children": []
   },
   {
     "id": 8,
@@ -78,7 +79,8 @@
       {
         "id": 7,
         "name": "folder3",
-        "type": "folder"
+        "type": "folder",
+        "children": []
       }
     ]
   },

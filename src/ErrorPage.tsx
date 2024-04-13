@@ -1,4 +1,12 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 function ErrorPage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/not-found", { replace: true });
+  }, [navigate]);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
