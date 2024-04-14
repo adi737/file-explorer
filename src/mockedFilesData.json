@@ -22,32 +22,32 @@
     ]
   },
   {
-    "id": 3,
+    "id": 5,
     "name": "super-html.html",
     "type": "text/html"
   },
   {
-    "id": 4,
+    "id": 6,
     "name": "super-svg.svg",
     "type": "image/svg+xml"
   },
   {
-    "id": 5,
+    "id": 7,
     "name": "folder2",
     "type": "folder",
     "children": [
       {
-        "id": 6,
+        "id": 8,
         "name": "super-pdf.pdf",
         "type": "application/pdf"
       },
       {
-        "id": 7,
+        "id": 9,
         "name": "folder3",
         "type": "folder",
         "children": [
           {
-            "id": 9,
+            "id": 10,
             "name": "super-jpeg.jpeg",
             "type": "image/jpeg"
           }
@@ -56,28 +56,28 @@
     ]
   },
   {
-    "id": 6,
+    "id": 11,
     "name": "super-pdf.pdf",
     "type": "application/pdf"
   },
   {
-    "id": 7,
+    "id": 12,
     "name": "folder3",
     "type": "folder",
     "children": []
   },
   {
-    "id": 8,
+    "id": 13,
     "name": "folder4",
     "type": "folder",
     "children": [
       {
-        "id": 6,
+        "id": 14,
         "name": "super-pdf.pdf",
         "type": "application/pdf"
       },
       {
-        "id": 7,
+        "id": 15,
         "name": "folder3",
         "type": "folder",
         "children": []
@@ -85,7 +85,7 @@
     ]
   },
   {
-    "id": 9,
+    "id": 16,
     "name": "super-jpeg.jpeg",
     "type": "image/jpeg"
   }

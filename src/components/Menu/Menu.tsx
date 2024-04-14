@@ -5,12 +5,14 @@ interface IMenuProps {
   menuData: {
     id: number;
     text: string;
+    type?: string;
     icon?: JSX.Element;
   }[];
   icon: JSX.Element;
+  onClick?: (type?: string) => void;
 }
 
-export const Menu: FC<IMenuProps> = ({ menuData, icon }) => {
+export const Menu: FC<IMenuProps> = ({ menuData, icon, onClick }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLElement>(null);
 
@@ -40,6 +42,10 @@ export const Menu: FC<IMenuProps> = ({ menuData, icon }) => {
             <li
               key={menuItem.id}
               className="flex items-center gap-2 p-2 cursor-pointer hover:bg-gray-300 duration-300 text-gray-700"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClick && onClick(menuItem.type);
+              }}
             >
               {menuItem.icon}
               <span className="text-nowrap">{menuItem.text}</span>

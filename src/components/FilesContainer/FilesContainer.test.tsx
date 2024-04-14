@@ -46,9 +46,6 @@ describe("FilesContainer", () => {
       <ProviderWrapper
         value={{
           filesData: testData,
-          setFilesData: () => {
-            1;
-          },
         }}
       >
         <FilesContainer />
@@ -67,9 +64,6 @@ describe("FilesContainer", () => {
       <ProviderWrapper
         value={{
           filesData: testData,
-          setFilesData: () => {
-            1;
-          },
         }}
       >
         <FilesContainer />
@@ -86,9 +80,6 @@ describe("FilesContainer", () => {
       <ProviderWrapper
         value={{
           filesData: testData,
-          setFilesData: () => {
-            1;
-          },
         }}
         path={["/folders/folder1"]}
       >
