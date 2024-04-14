@@ -4,13 +4,18 @@ import { MemoryRouter } from "react-router-dom";
 
 interface IProviderWrapper {
   children: React.ReactNode;
-  value: IFilesContext;
+  value?: IFilesContext;
   path?: string[];
 }
 
 export const ProviderWrapper: FC<IProviderWrapper> = ({
   children,
-  value,
+  value = {
+    filesData: [],
+    setFilesData: () => {
+      1;
+    },
+  },
   path,
 }) => (
   <FilesContext.Provider value={value}>
