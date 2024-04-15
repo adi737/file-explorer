@@ -9,7 +9,7 @@ interface IMenuProps {
     icon?: JSX.Element;
   }[];
   icon: JSX.Element;
-  onClick?: (type?: string) => void;
+  onClick: (type?: string) => void;
 }
 
 export const Menu: FC<IMenuProps> = ({ menuData, icon, onClick }) => {
@@ -44,7 +44,7 @@ export const Menu: FC<IMenuProps> = ({ menuData, icon, onClick }) => {
               className="flex items-center gap-2 p-2 cursor-pointer hover:bg-gray-300 duration-300 text-gray-700"
               onClick={(e) => {
                 e.stopPropagation();
-                onClick && onClick(menuItem.type);
+                onClick(menuItem.type);
               }}
             >
               {menuItem.icon}

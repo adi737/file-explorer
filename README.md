@@ -15,10 +15,11 @@
 
 ### Next steps
 
-1. Add possibility to add/delete/rename folder and file to tree
-2. Add search bar to search for files and folders
-3. Create breadcrumb
-4. Improve accessibility
+1. Possibility of adding new item to empty folder.
+2. Possibility to delete folders and rename items
+3. Add search bar to search for files and folders
+4. Create breadcrumb
+5. Improve accessibility
 
 ### Ideas for future
 

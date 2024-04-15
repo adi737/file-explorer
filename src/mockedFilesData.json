@@ -18,6 +18,12 @@
         "id": 4,
         "name": "super-svg.svg",
         "type": "image/svg+xml"
+      },
+      {
+        "id": 25,
+        "name": "folderr",
+        "type": "folder",
+        "children": []
       }
     ]
   },
@@ -50,6 +56,12 @@
             "id": 10,
             "name": "super-jpeg.jpeg",
             "type": "image/jpeg"
+          },
+          {
+            "id": 27,
+            "name": "folderr",
+            "type": "folder",
+            "children": []
           }
         ]
       }
@@ -88,5 +100,11 @@
     "id": 16,
     "name": "super-jpeg.jpeg",
     "type": "image/jpeg"
+  },
+  {
+    "id": 26,
+    "name": "folderr",
+    "type": "folder",
+    "children": []
   }
 ]

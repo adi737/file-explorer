@@ -1,9 +1,21 @@
 import { FC, useContext, useRef } from "react";
 import { FilesContext } from "../../context/FilesContext";
+import { addItemToFolder } from "../../actions/filesActions";
+import { useLocation } from "react-router-dom";
 
 export const CreateFileModal: FC = () => {
-  const { showModal, setShowModal, modalType } = useContext(FilesContext)!;
+  const { showModal, setShowModal, modalType, filesData, setFilesData } =
+    useContext(FilesContext)!;
   const inputRef = useRef<HTMLInputElement>(null);
+  const location = useLocation();
+
+  const pathNameArr = location.pathname.split("/");
+
+  const containsSpecialCharacters = (inputString: string) => {
+    const specialCharactersRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
+
+    return specialCharactersRegex.test(inputString);
+  };
 
   const handleClose = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (e.target === e.currentTarget) setShowModal(false);
@@ -11,6 +23,52 @@ export const CreateFileModal: FC = () => {
 
   const createFileOrFolder = () => {
     if (!inputRef.current) return;
+    if (!inputRef.current.files?.[0] && !inputRef.current.value)
+      return alert("Provide some value.");
+
+    if (inputRef.current.files?.[0]) {
+      const file = inputRef.current.files[0];
+
+      const newItem = {
+        id: Date.now(),
+        name: file.name,
+        type: file.type,
+      };
+
+      const newFilesData = addItemToFolder(filesData, newItem, pathNameArr);
+
+      if (!newFilesData) return;
+      if (newFilesData === "Item alredy exist") return alert(newFilesData);
+
+      setFilesData(newFilesData);
+      setShowModal(false);
+      inputRef.current.value = "";
+    }
+
+    if (inputRef.current.value) {
+      const inputValue = inputRef.current.value;
+
+      if (containsSpecialCharacters(inputValue))
+        return alert("Special characters are not allowed!");
+
+      const folderName = inputValue.replace(/ /g, "-");
+
+      const newItem = {
+        id: Date.now(),
+        name: folderName,
+        type: "folder",
+        children: [],
+      };
+
+      const newFilesData = addItemToFolder(filesData, newItem, pathNameArr);
+
+      if (!newFilesData) return;
+      if (newFilesData === "Item alredy exist") return alert(newFilesData);
+
+      setFilesData(newFilesData);
+      setShowModal(false);
+      inputRef.current.value = "";
+    }
   };
 
   return (

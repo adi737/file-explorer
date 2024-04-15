@@ -2,11 +2,7 @@ import { FC, useContext, useEffect } from "react";
 import { Icon } from "./Icon";
 import { FilesContext, IFileSystemItem } from "../../context/FilesContext";
 import { useLocation, useNavigate } from "react-router-dom";
-
-type FnReturn = (
-  items: IFileSystemItem[] | undefined,
-  index: number
-) => FnReturn | null | IFileSystemItem[];
+import { findFolderItems } from "../../actions/filesActions";
 
 export const FilesContainer: FC = () => {
   const { filesData } = useContext(FilesContext)!;
@@ -27,21 +23,9 @@ export const FilesContainer: FC = () => {
     }
   };
 
-  const findFolderItems: FnReturn = (
-    items: IFileSystemItem[] | undefined,
-    index: number
-  ) => {
-    if (!items) return null;
-    if (index > pathNameArr.length - 1) return items;
-
-    const itemsFound = items?.find(
-      (file) => file.name === pathNameArr[index]
-    )?.children;
-
-    return findFolderItems(itemsFound, index + 1);
-  };
-
-  const folderItems = findFolderItems(filesData, 2) as IFileSystemItem[] | null;
+  const folderItems = findFolderItems(filesData, 2, pathNameArr) as
+    | IFileSystemItem[]
+    | null;
 
   useEffect(() => {
     if (!folderItems) return navigate("/not-found", { replace: true });
@@ -57,6 +41,7 @@ export const FilesContainer: FC = () => {
         {folderItems.map((item) => (
           <Icon
             key={item.id}
+            id={item.id}
             name={item.name}
             type={item.type}
             onClick={goToFolder}
