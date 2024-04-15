@@ -9,6 +9,7 @@ import {
 import { Menu } from "../Menu";
 import { removeItem } from "../../actions/filesActions";
 import { FilesContext } from "../../context/FilesContext";
+import { useLocation } from "react-router-dom";
 
 const menuData = [
   {
@@ -33,6 +34,10 @@ interface IIconProps {
 
 export const Icon: FC<IIconProps> = ({ id, name, type, onClick }) => {
   const { filesData, setFilesData } = useContext(FilesContext)!;
+  const location = useLocation();
+
+  const pathNameArr = location.pathname.split("/");
+
   return (
     <article
       className="w-full cursor-pointer group text-center border border-gray-300 rounded-lg p-2 relative"
@@ -45,18 +50,21 @@ export const Icon: FC<IIconProps> = ({ id, name, type, onClick }) => {
             <EllipsisVerticalIcon className="text-gray-500 w-6 h-6 group-hover/menu:scale-125 duration-300" />
           }
           onClick={(menuItemType?: string) => {
-            if (type === "folder")
-              return alert("No possibility to remove folder yet");
-
             if (menuItemType === "rename")
               return alert("No possibility to rename yet");
 
             if (menuItemType === "delete") {
-              const newFilesData = removeItem(filesData, {
-                id,
-                name,
-                type,
-              });
+              const newFilesData = removeItem(
+                filesData,
+                {
+                  id,
+                  name,
+                  type,
+                },
+                pathNameArr
+              );
+
+              if (!newFilesData) return;
 
               setFilesData(newFilesData);
             }

@@ -17,6 +17,21 @@ export const findFolderItems: FnReturn = (items, index, pathNameArr) => {
   return findFolderItems(itemsFound, index + 1, pathNameArr);
 };
 
+export const findPreviousFolderItems: FnReturn = (
+  items,
+  index,
+  pathNameArr
+) => {
+  if (!items) return null;
+  if (index > pathNameArr.length - 2) return items;
+
+  const itemsFound = items?.find(
+    (file) => file.name === pathNameArr[index]
+  )?.children;
+
+  return findPreviousFolderItems(itemsFound, index + 1, pathNameArr);
+};
+
 export const addItemToFolder = (
   filesData: IFileSystemItem[],
   newItem: IFileSystemItem,
@@ -27,8 +42,37 @@ export const addItemToFolder = (
     | null;
 
   if (!folderItems) return null;
-  if (folderItems.length === 0)
-    return alert("No possibility of adding item to empty folder yet");
+
+  if (pathNameArr.length < 3 && folderItems.length === 0) {
+    return [newItem];
+  }
+
+  if (folderItems.length === 0) {
+    const previousFolderItems = findPreviousFolderItems(
+      filesData,
+      2,
+      pathNameArr
+    ) as IFileSystemItem[] | null;
+
+    const newItems = previousFolderItems?.map((item) =>
+      item.name === pathNameArr[pathNameArr.length - 1]
+        ? { ...item, children: [newItem] }
+        : item
+    );
+
+    const filesDataString = JSON.stringify(filesData);
+    const previousFolderItemsString = JSON.stringify(previousFolderItems);
+    const newItemsString = JSON.stringify(newItems);
+
+    const modifiedDataStr = filesDataString.replace(
+      previousFolderItemsString,
+      newItemsString
+    );
+
+    const modifiedData = JSON.parse(modifiedDataStr) as IFileSystemItem[];
+
+    return modifiedData;
+  }
 
   const doesItemExist = folderItems.some(
     (item: IFileSystemItem) => item.name === newItem.name
@@ -51,11 +95,31 @@ export const addItemToFolder = (
 
 export const removeItem = (
   filesData: IFileSystemItem[],
-  itemToRemove: IFileSystemItem
+  itemToRemove: IFileSystemItem,
+  pathNameArr: string[]
 ) => {
+  const folderItems = findFolderItems(filesData, 2, pathNameArr) as
+    | IFileSystemItem[]
+    | null;
+
+  if (!folderItems) return;
+
+  const removedItem = folderItems.find((item) => item.id === itemToRemove.id);
+  const removedItemIndex = folderItems.findIndex(
+    (item) => item.id === itemToRemove.id
+  );
+
   const filesDataString = JSON.stringify(filesData);
-  const itemToRemoveString = JSON.stringify(itemToRemove);
-  const modifiedDataStr = filesDataString.replace(itemToRemoveString + ",", "");
+  const removeItemString = JSON.stringify(removedItem);
+  const modifiedDataStr = filesDataString.replace(
+    folderItems.length === 1
+      ? removeItemString
+      : folderItems.length - 1 === removedItemIndex
+      ? "," + removeItemString
+      : removeItemString + ",",
+    ""
+  );
+
   const modifiedData = JSON.parse(modifiedDataStr) as IFileSystemItem[];
 
   return modifiedData;

@@ -77,7 +77,7 @@ export const CreateFileModal: FC = () => {
       className={`fixed inset-0 z-10 bg-black bg-opacity-50 p-4 duration-300 ${
         showModal ? "visible opacity-100" : "invisible opacity-0"
       }`}
-      onClick={handleClose}
+      onMouseDown={handleClose}
       role="presentation"
     >
       <div className="w-full max-w-xl relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh] overflow-y-auto rounded-md bg-white p-10 shadow-lg">
