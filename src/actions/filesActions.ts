@@ -78,7 +78,7 @@ export const addItemToFolder = (
     (item: IFileSystemItem) => item.name === newItem.name
   );
 
-  if (doesItemExist) return "Item alredy exist";
+  if (doesItemExist) return alert("Item with this name alredy exist");
 
   const filesDataString = JSON.stringify(filesData);
   const folderItemsString = JSON.stringify(folderItems);
@@ -110,16 +110,50 @@ export const removeItem = (
   );
 
   const filesDataString = JSON.stringify(filesData);
-  const removeItemString = JSON.stringify(removedItem);
+  const removedItemString = JSON.stringify(removedItem);
   const modifiedDataStr = filesDataString.replace(
     folderItems.length === 1
-      ? removeItemString
+      ? removedItemString
       : folderItems.length - 1 === removedItemIndex
-      ? "," + removeItemString
-      : removeItemString + ",",
+      ? "," + removedItemString
+      : removedItemString + ",",
     ""
   );
 
+  const modifiedData = JSON.parse(modifiedDataStr) as IFileSystemItem[];
+
+  return modifiedData;
+};
+
+export const renameItem = (
+  filesData: IFileSystemItem[],
+  itemToRename: IFileSystemItem | undefined,
+  pathNameArr: string[],
+  newName: string
+) => {
+  const folderItems = findFolderItems(filesData, 2, pathNameArr) as
+    | IFileSystemItem[]
+    | null;
+
+  if (!folderItems || !itemToRename) return;
+
+  const newFolderName = newName.replace(/ /g, "-");
+
+  const renameItem = folderItems.find((item) => item.id === itemToRename.id);
+  const renamedItem = { ...renameItem, name: newFolderName };
+
+  const doesItemExist = folderItems.some(
+    (item: IFileSystemItem) => item.name === renamedItem.name
+  );
+  if (doesItemExist) return alert("Item with this name alredy exist");
+
+  const filesDataString = JSON.stringify(filesData);
+  const renameIemString = JSON.stringify(renameItem);
+  const renamedItemString = JSON.stringify(renamedItem);
+  const modifiedDataStr = filesDataString.replace(
+    renameIemString,
+    renamedItemString
+  );
   const modifiedData = JSON.parse(modifiedDataStr) as IFileSystemItem[];
 
   return modifiedData;

@@ -13,15 +13,11 @@
 - Vite/Vitest
 - Tailwind
 
-### Next steps
+### Ideas for future
 
-- Possibility to rename items
 - Add search bar to search for files and folders
 - Create breadcrumb
 - Improve accessibility
-
-### Ideas for future
-
 - Divide the code into more reusable components
 - More tests
 - Better project setup

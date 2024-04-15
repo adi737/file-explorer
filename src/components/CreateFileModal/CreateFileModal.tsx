@@ -1,11 +1,17 @@
 import { FC, useContext, useRef } from "react";
 import { FilesContext } from "../../context/FilesContext";
-import { addItemToFolder } from "../../actions/filesActions";
+import { addItemToFolder, renameItem } from "../../actions/filesActions";
 import { useLocation } from "react-router-dom";
 
 export const CreateFileModal: FC = () => {
-  const { showModal, setShowModal, modalType, filesData, setFilesData } =
-    useContext(FilesContext)!;
+  const {
+    showModal,
+    setShowModal,
+    modalType,
+    filesData,
+    setFilesData,
+    renamedItem,
+  } = useContext(FilesContext)!;
   const inputRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
 
@@ -26,6 +32,26 @@ export const CreateFileModal: FC = () => {
     if (!inputRef.current.files?.[0] && !inputRef.current.value)
       return alert("Provide some value.");
 
+    if (modalType === "rename") {
+      const inputValue = inputRef.current.value;
+      if (containsSpecialCharacters(inputValue))
+        return alert("Special characters are not allowed!");
+
+      const newFilesData = renameItem(
+        filesData,
+        renamedItem,
+        pathNameArr,
+        inputValue
+      );
+      if (!newFilesData) return;
+
+      setFilesData(newFilesData);
+      setShowModal(false);
+      inputRef.current.value = "";
+
+      return;
+    }
+
     if (inputRef.current.files?.[0]) {
       const file = inputRef.current.files[0];
 
@@ -38,11 +64,12 @@ export const CreateFileModal: FC = () => {
       const newFilesData = addItemToFolder(filesData, newItem, pathNameArr);
 
       if (!newFilesData) return;
-      if (newFilesData === "Item alredy exist") return alert(newFilesData);
 
       setFilesData(newFilesData);
       setShowModal(false);
       inputRef.current.value = "";
+
+      return;
     }
 
     if (inputRef.current.value) {
@@ -63,11 +90,12 @@ export const CreateFileModal: FC = () => {
       const newFilesData = addItemToFolder(filesData, newItem, pathNameArr);
 
       if (!newFilesData) return;
-      if (newFilesData === "Item alredy exist") return alert(newFilesData);
 
       setFilesData(newFilesData);
       setShowModal(false);
       inputRef.current.value = "";
+
+      return;
     }
   };
 
@@ -81,7 +109,9 @@ export const CreateFileModal: FC = () => {
       role="presentation"
     >
       <div className="w-full max-w-xl relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[90vh] overflow-y-auto rounded-md bg-white p-10 shadow-lg">
-        <p className="text-lg mb-8">Create {modalType}</p>
+        <p className="text-lg mb-8">
+          {modalType === "rename" ? "Rename item" : `Create ${modalType}`}
+        </p>
         {modalType === "file" ? (
           <>
             <label
@@ -105,7 +135,7 @@ export const CreateFileModal: FC = () => {
               ref={inputRef}
             />
             <label className="after:content[''] pointer-events-none absolute left-0  -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-              Folder name
+              Name
             </label>
           </div>
         )}

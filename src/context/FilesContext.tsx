@@ -15,6 +15,10 @@ export interface IFilesContext {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   modalType?: string;
   setModalType: React.Dispatch<React.SetStateAction<string | undefined>>;
+  renamedItem?: IFileSystemItem;
+  setRenamedItem: React.Dispatch<
+    React.SetStateAction<IFileSystemItem | undefined>
+  >;
 }
 
 export const FilesContext = createContext<IFilesContext | null>(null);
@@ -28,6 +32,7 @@ export const FilesProvider: FC<IFilesProvider> = ({ children }) => {
     useState<IFileSystemItem[]>(mockedFilesData);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState<string>();
+  const [renamedItem, setRenamedItem] = useState<IFileSystemItem>();
 
   return (
     <FilesContext.Provider
@@ -38,6 +43,8 @@ export const FilesProvider: FC<IFilesProvider> = ({ children }) => {
         setShowModal,
         modalType,
         setModalType,
+        renamedItem,
+        setRenamedItem,
       }}
     >
       {children}

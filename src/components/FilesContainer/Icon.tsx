@@ -33,7 +33,13 @@ interface IIconProps {
 }
 
 export const Icon: FC<IIconProps> = ({ id, name, type, onClick }) => {
-  const { filesData, setFilesData } = useContext(FilesContext)!;
+  const {
+    filesData,
+    setFilesData,
+    setModalType,
+    setShowModal,
+    setRenamedItem,
+  } = useContext(FilesContext)!;
   const location = useLocation();
 
   const pathNameArr = location.pathname.split("/");
@@ -50,9 +56,6 @@ export const Icon: FC<IIconProps> = ({ id, name, type, onClick }) => {
             <EllipsisVerticalIcon className="text-gray-500 w-6 h-6 group-hover/menu:scale-125 duration-300" />
           }
           onClick={(menuItemType?: string) => {
-            if (menuItemType === "rename")
-              return alert("No possibility to rename yet");
-
             if (menuItemType === "delete") {
               const newFilesData = removeItem(
                 filesData,
@@ -66,8 +69,12 @@ export const Icon: FC<IIconProps> = ({ id, name, type, onClick }) => {
 
               if (!newFilesData) return;
 
-              setFilesData(newFilesData);
+              return setFilesData(newFilesData);
             }
+
+            setRenamedItem({ id, name, type });
+            setModalType(menuItemType);
+            setShowModal(true);
           }}
         />
       </div>
